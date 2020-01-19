@@ -11,11 +11,11 @@ class Graph:
     def __init__(self):
         self.vertices = {}
 
-    def add_vertex(self, vertex_id):
+    def add_vertex(self, vertex):
         """
         Add a vertex to the graph.
         """
-        self.vertices[vertex_id] = set()
+        self.vertices[vertex] = set()
 
     def add_edge(self, v1, v2):
 
@@ -53,10 +53,15 @@ class Graph:
             vertex = qq.dequeue()
             if vertex not in visited:
                 visited.add(vertex)
+                # this spot is when you do additional stuff, when you mark it visited
                 print(vertex)
+
                 # add the adjacent verteces that have not yet been visited to the queue
+
                 for next_vert in self.vertices[vertex]:
                     qq.enqueue(next_vert)
+
+        print('visited', visited)
 
     def dft(self, starting_vertex):
         """
@@ -70,7 +75,7 @@ class Graph:
             vertex = stack.pop()
             if vertex not in visited:
                 visited.add(vertex)
-                print(vertex)
+                # print(vertex)
                 for next_vert in self.vertices[vertex]:
                     stack.push(next_vert)
 
@@ -92,7 +97,37 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        # TODO
+
+        # create queue to visit indices
+        qq = Queue()
+
+        # create set for visited
+        visited = set()
+
+        # add the first path
+        qq.enqueue([starting_vertex])
+
+        # while we have unvisited paths
+        while qq.size() > 0:
+            # take the oldest path out of the queue
+            path = qq.dequeue()
+            # take its starting index
+            vertex = path[-1]
+            # if we haven't visited it yet
+            if vertex not in visited:
+                # first check if we hit ou/
+                    return path
+                # if not, add that vertex to the visited
+                visited.add(vertex)
+                # visit the next vertex
+                for next_vert in self.vertices[vertex]:
+                    # set the new path equal to path of already visited
+                    new_path = path
+                    # add the next vertex to it
+                    new_path.append(next_vert)
+                    # add the new path to the queue
+                    qq.enqueue(new_path)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -165,14 +200,14 @@ if __name__ == '__main__':
         1, 2, 4, 6, 3, 5, 7
     '''
     graph.dft(1)
-    graph.dft_recursive(1)
+    # graph.dft_recursive(1)
 
     '''
     Valid BFS path:
         [1, 2, 4, 6]
     '''
 
-    # print(graph.bfs(1, 6))
+    print(graph.bfs(1, 6))
 
     '''
     Valid DFS paths:
