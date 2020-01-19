@@ -116,7 +116,9 @@ class Graph:
             vertex = path[-1]
             # if we haven't visited it yet
             if vertex not in visited:
-                # first check if we hit ou/
+                # first check if we hit our destination
+                if vertex == destination_vertex:
+                    # if so return the path
                     return path
                 # if not, add that vertex to the visited
                 visited.add(vertex)
