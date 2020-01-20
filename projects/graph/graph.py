@@ -61,8 +61,6 @@ class Graph:
                 for next_vert in self.vertices[vertex]:
                     qq.enqueue(next_vert)
 
-        print('visited', visited)
-
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
@@ -137,7 +135,21 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        stack = Stack()
+        visited = set()
+        path = []
+
+        stack.push(starting_vertex)
+        while stack.size() > 0:
+            vertex = stack.pop()
+            if vertex not in visited:
+                path.append(vertex)
+                visited.add(vertex)
+                if vertex == destination_vertex:
+                    return path
+
+                for next_vert in self.vertices[vertex]:
+                    stack.push(next_vert)
 
     def dfs_recursive(self, starting_vertex):
         """
@@ -209,12 +221,12 @@ if __name__ == '__main__':
         [1, 2, 4, 6]
     '''
 
-    print(graph.bfs(1, 6))
+    # print(graph.bfs(1, 6))
 
     '''
     Valid DFS paths:
         [1, 2, 4, 6]
         [1, 2, 4, 7, 6]
     '''
-    # print(graph.dfs(1, 6))
+    print('graphs dfs', graph.dfs(1, 6))
     # print(graph.dfs_recursive(1, 6))
